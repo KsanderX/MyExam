@@ -28,7 +28,7 @@
             <StackPanel Orientation="Horizontal" Margin="5" Name="PanelFind">
                 <TextBox Width="100" Name="BoxFind" TextChanged="BoxFind_TextChanged"/>
                 <TextBlock Text="Поиск" Margin=" 5 0 5 0"/>
-                <ComboBox Name="ComboBoxItem" SelectedIndex="0" Width="100" SelectionChanged="ComboSuppliers_SelectionChanged"/>
+                <ComboBox Name="ComboBoxItem" SelectedIndex="0" Width="120" SelectionChanged="ComboSuppliers_SelectionChanged"/>
                 <RadioButton Content="по возрастанию" Margin="5 0 5 0"
                              Checked="RadioUpp_Checked"
                              IsChecked="True"/>

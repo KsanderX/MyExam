@@ -108,7 +108,8 @@ namespace demo.Windows
 
             if (add.ShowDialog() == true)
             {
-                DrawProductItem(products);
+                //DrawProductItem(products);
+                Sort();
             }
         }       
 
@@ -176,25 +177,27 @@ namespace demo.Windows
         private void Buutton_delite_product(object sender, RoutedEventArgs e)
         {
             var selectedController = BoxProduct.SelectedItem as ItemProduct;
+            if (selectedController == null) return;
 
-            if (selectedController != null)
+            Product selectedProduct = selectedController.DataContext as Product;
+
+            try
             {
-                try
-                {
-                    Product selectedProduct = selectedController.DataContext as Product;
-                    context.Products.Remove(selectedProduct);
-                    context.SaveChanges();
-                    MessageBox.Show("Продукт успешно удален!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                    Sort();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Вы не можете удалить продукт который входит в состав заказа");
-                }
+                context.Products.Remove(selectedProduct);
+                context.SaveChanges();
+                MessageBox.Show("Продукт успешно удален!");
+                Sort();
             }
-            else
+            catch (DbUpdateException) // Важно: ловим ошибки обновления БД
             {
-                MessageBox.Show("Выберите продукт для удаления!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                context.Entry(selectedProduct).State = EntityState.Unchanged;
+
+                MessageBox.Show("Вы не можете удалить продукт, который входит в состав заказа.",
+                                "Ошибка связи", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка: {ex.Message}");
             }
         }
     }
