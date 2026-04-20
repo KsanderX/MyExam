@@ -2,11 +2,9 @@
 using demo.Models;
 using demo.UserControllers;
 using demo.Windows.Products;
-using demo.Windows.RequestWin;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Reflection;
-using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -26,7 +24,7 @@ namespace demo.Windows
         {
             context = new DemoContext();
             InitializeComponent();
-            BoxUserName.Text = "гость";
+            BoxUserName.Text = "Гость";
             PanelFind.Visibility = Visibility.Collapsed;
             PanelBottomButton.Visibility = Visibility.Collapsed;
             DrawProductItem(products);
@@ -71,7 +69,6 @@ namespace demo.Windows
             if(BoxProduct != null)
             {
                 BoxProduct.Items.Clear();
-                //BoxProduct.ItemsSource = product.Select(p => new ItemProduct(p));
                 foreach (var item in products)
                 {
                     if (item != null)
@@ -87,6 +84,7 @@ namespace demo.Windows
         private void Button_exit_user(object sender, RoutedEventArgs e)
         {
             Authorization authorization = new Authorization();
+            MessageBox.Show("Вы вышли из аккаунта", "Успех!", MessageBoxButton.OK, MessageBoxImage.Information);
             authorization.Show();
             this.Close();
         }
@@ -96,7 +94,7 @@ namespace demo.Windows
             ListBox list = sender as ListBox;
             ItemProduct controller = list.SelectedItem as ItemProduct;
             Product product = controller.DataContext as Product;
-            EditProduct edit = new EditProduct(product);
+            EditProduct edit = new EditProduct(product, context);
 
             if (edit.ShowDialog() == true)
             {
@@ -112,16 +110,7 @@ namespace demo.Windows
             {
                 DrawProductItem(products);
             }
-        }
-
-        private void Button_request(object sender, RoutedEventArgs e)
-        {
-            RequestWindows request = new RequestWindows(currentUser);
-            if (request.ShowDialog() == true)
-            {
-
-            }
-        }
+        }       
 
         //Поиск
         private void BoxFind_TextChanged(object sender, TextChangedEventArgs e)

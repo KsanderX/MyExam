@@ -10,7 +10,6 @@ namespace demo.Windows.Products
 {
     public partial class AddProduct : Window
     {
-        //private readonly string _pathToRes = $"{Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName}\\res\\";
         private readonly string projPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private string? imageName = null;
         private BitmapImage selectImage;
@@ -74,11 +73,9 @@ namespace demo.Windows.Products
                     context.SaveChanges();
                     name = context.ProductNames.FirstOrDefault(q => q.Name == BoxName.Text);
                 }
-                //тут идёт присвоение id как как в таблице я забыл установить автоикремент для поля ID,
-                //поэтому я делаю это руками (так делать не надо)
                 Product newProduct = new Product()
                 {
-                    Id = context.Products.Max(q => q.Id) + 1,//Так делать если автоикремент в бд не сделан
+                    Id = context.Products.Max(q => q.Id) + 1,
                     Name = name,
                     Category = context.Categories.FirstOrDefault(q => q.Name == BoxCategory.SelectedItem.ToString()),
                     Description = BoxDescription.Text,
@@ -103,6 +100,7 @@ namespace demo.Windows.Products
 
         private void ButtonExit(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Вы вышли из окна добавления товара", "Успех!", MessageBoxButton.OK, MessageBoxImage.Information);
             DialogResult = false;
         }
 
@@ -115,6 +113,12 @@ namespace demo.Windows.Products
                 Uri uri = new Uri(openFile.FileName);
                 BitmapImage select = new BitmapImage(uri);
 
+                if (select.Width > 400 || select.Height > 300)
+                {
+                    MessageBox.Show("Размеры изображения имеют неверный формат", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                 string folderPath = Path.Combine(projPath, "Images");
 
 
@@ -125,6 +129,7 @@ namespace demo.Windows.Products
                     File.Copy(openFile.FileName, destFileName, true);
 
                     selectImage = select;
+
                     imageName = openFile.SafeFileName;
                     BoxImage.Source = selectImage;
                 }

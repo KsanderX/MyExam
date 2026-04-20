@@ -1,6 +1,5 @@
 ﻿using demo.Data;
 using demo.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Windows;
 
 namespace demo.Windows
@@ -24,6 +23,8 @@ namespace demo.Windows
                 {
                     user.RoleNavigation = context.Roles.FirstOrDefault(q => q.Id == user.Role);
                     Main main = new Main(user);
+                    MessageBox.Show("Вы успешно авторизовались!", "Успех!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    
                     main.Show();
                     this.Close();
                 }
@@ -41,6 +42,7 @@ namespace demo.Windows
         private void Button_authorization_gouest(object sender, RoutedEventArgs e)
         {
             Main main = new Main();
+            MessageBox.Show("Вы вошли как гость!", "Успех!", MessageBoxButton.OK, MessageBoxImage.Information);
             main.Show();
             this.Close();
         }

@@ -23,7 +23,6 @@
                 <Button Content="Добавить" Width="80" Margin="5" Click="Button_add_product"/>
                 <Button Content="Удалить" Width="80" Margin="5" Click="Buutton_delite_product"/>
             </StackPanel>
-            <Button Name="PanelRequestBottom" Content="Заявки" Width="80" Margin="5" Click="Button_request"/>
         </StackPanel>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5" Name="PanelFind">

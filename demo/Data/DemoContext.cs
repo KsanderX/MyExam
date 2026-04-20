@@ -1,6 +1,5 @@
 ﻿using demo.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace demo.Data;
 

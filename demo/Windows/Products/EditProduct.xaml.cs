@@ -16,11 +16,11 @@ namespace demo.Windows.Products
         private Product product;
         private BitmapImage selectImage;
         private string? imageName = null;
-        public EditProduct(Product product)
+        public EditProduct(Product product, DemoContext prevContext)
         {
             InitializeComponent();
 
-            context = new DemoContext();
+            context = prevContext;
             this.product = product;
             Load();
         }
@@ -112,7 +112,6 @@ namespace demo.Windows.Products
                 }
 
                 product.Name = name;
-                // product.Name = context.ProductNames.FirstOrDefault(q => q.Name == BoxName.Text) ?? new ProductName() { Id = context.ProductNames.Max(q => q.Id) + 1, Name = BoxName.Text };
                 product.Category = context.Categories.FirstOrDefault(q => q.Name == BoxCategory.SelectedItem.ToString());
                 product.Description = BoxDescription.Text;
                 product.Manufacturer = context.Manufacturers.FirstOrDefault(q => q.Name == BoxManufacturer.SelectedItem.ToString());
@@ -126,19 +125,21 @@ namespace demo.Windows.Products
                     product.ImagePath = imageName;
                 }
 
-                context.Entry(product).State = EntityState.Modified;
                 context.SaveChanges();
 
+                MessageBox.Show("Изменения сохранены!", "Успех!", MessageBoxButton.OK, MessageBoxImage.Information);
                 DialogResult = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"не верный формат ввода {ex.Message}");
+                MessageBox.Show($"Неверный формат ввода {ex.Message}");
             }
         }
 
         private void ButtonExit(object sender, RoutedEventArgs e)
         {
+
+            MessageBox.Show("Вы вышли из окна редактирования товара", "Успех!", MessageBoxButton.OK, MessageBoxImage.Information);
             DialogResult = false;
         }
 
@@ -150,6 +151,12 @@ namespace demo.Windows.Products
             {
                 Uri uri = new Uri(openFile.FileName);
                 BitmapImage select = new BitmapImage(uri);
+
+                if (select.Width > 400 || select.Height > 300)
+                {
+                    MessageBox.Show("Размеры изображения имеют неверный формат", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
                 string folderPath = Path.Combine(projPath, "Images");
 
