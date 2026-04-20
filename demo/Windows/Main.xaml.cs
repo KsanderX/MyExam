@@ -188,7 +188,7 @@ namespace demo.Windows
                 MessageBox.Show("Продукт успешно удален!");
                 Sort();
             }
-            catch (DbUpdateException) // Важно: ловим ошибки обновления БД
+            catch (DbUpdateException) 
             {
                 context.Entry(selectedProduct).State = EntityState.Unchanged;
 
