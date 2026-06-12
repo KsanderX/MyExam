@@ -192,3 +192,5 @@ public partial class DemoContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
+
+//Scaffold-DbContext "Server= ;DataBase= ;Trust Server Sertificate=True; Integrated Security=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
