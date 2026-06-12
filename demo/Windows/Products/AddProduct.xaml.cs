@@ -94,7 +94,7 @@ namespace demo.Windows.Products
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"не верный формат ввода {ex.Message}");
+                MessageBox.Show($"Неверный формат ввода {ex.Message}");
             }
         }
 

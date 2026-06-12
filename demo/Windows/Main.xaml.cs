@@ -2,6 +2,7 @@
 using demo.Models;
 using demo.UserControllers;
 using demo.Windows.Products;
+using demo.Windows.RequestWin;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Reflection;
@@ -43,6 +44,10 @@ namespace demo.Windows
             if (user.RoleNavigation.Role1 == "Администратор")
             {
                 BoxProduct.MouseDoubleClick += BoxProduct_MouseDoubleClick;
+            }
+            else if(user.RoleNavigation.Role1 == "Авторизированный клиент")
+            {
+                PanelBottomButton.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -198,6 +203,15 @@ namespace demo.Windows
             catch (Exception ex)
             {
                 MessageBox.Show($"Произошла ошибка: {ex.Message}");
+            }
+        }
+
+        private void Button_requests(object sender, RoutedEventArgs e)
+        {
+            RequestWindows requestWin = new RequestWindows(currentUser);
+            if( requestWin.ShowDialog() == true)
+            {
+             
             }
         }
     }

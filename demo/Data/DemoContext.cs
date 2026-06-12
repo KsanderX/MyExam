@@ -7,7 +7,7 @@ public partial class DemoContext : DbContext
 {
     public DemoContext()
     {
-       // Database.EnsureDeleted();
+        //Database.EnsureDeleted();
         Database.EnsureCreated();
     }
 
@@ -39,8 +39,8 @@ public partial class DemoContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)    
-        //=> optionsBuilder.UseSqlServer("Server=PC_Sanya; Database=DemoDemo; Trusted_Connection=True; TrustServerCertificate=True");
-        => optionsBuilder.UseSqlServer("Server=dbsrv\\demo; Database=DemoDemo; Trusted_Connection=True; TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Server=PC_Sanya; Database=DemoDemo; Trusted_Connection=True; TrustServerCertificate=True");
+        //=> optionsBuilder.UseSqlServer("Server=dbsrv\\demo; Database=DemoDemo; Trusted_Connection=True; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
